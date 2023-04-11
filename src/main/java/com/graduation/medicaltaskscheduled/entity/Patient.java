@@ -1,7 +1,10 @@
 package com.graduation.medicaltaskscheduled.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -57,9 +60,14 @@ public class Patient implements Serializable {
     @ApiModelProperty(value = "是否逻辑删除(0未删除，1删除)")
     private Boolean isDeleted;
 
+    @ApiModelProperty(value = "其他信息")
+    private String other;
+
+    @TableField(fill = FieldFill.INSERT)
     @ApiModelProperty(value = "创建时间")
     private Date gmtCreate;
 
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     @ApiModelProperty(value = "更新时间")
     private Date gmtModified;
 

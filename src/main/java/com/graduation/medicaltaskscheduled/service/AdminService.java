@@ -2,6 +2,13 @@ package com.graduation.medicaltaskscheduled.service;
 
 import com.graduation.medicaltaskscheduled.entity.Admin;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.graduation.medicaltaskscheduled.entity.Appointment;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ExecutionException;
 
 /**
  * <p>
@@ -13,4 +20,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface AdminService extends IService<Admin> {
 
+    String adminRegister(String mobile, String pwd);
+
+    String adminLogin(String mobile, String pwd, HttpServletRequest request);
+
+    List<Appointment> getTaskQueue();
+
+    List<Integer> taskScheduled(List<String> carIdList, List<Appointment> appointmentList) throws ExecutionException, InterruptedException;
+
+    void ackScheduled(List<String> appointmentIdList);
 }

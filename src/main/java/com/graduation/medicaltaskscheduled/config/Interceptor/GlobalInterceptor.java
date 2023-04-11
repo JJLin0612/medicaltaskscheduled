@@ -1,13 +1,13 @@
 package com.graduation.medicaltaskscheduled.config.Interceptor;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.fromzerotoexpert.utils.CookieUtil;
-import com.example.fromzerotoexpert.utils.IpUtil;
-import com.example.fromzerotoexpert.utils.JwtUtils;
 import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
 import com.graduation.medicaltaskscheduled.entity.dto.Result;
 import com.graduation.medicaltaskscheduled.entity.dto.ResultCode;
+import com.graduation.medicaltaskscheduled.utils.CookieUtil;
+import com.graduation.medicaltaskscheduled.utils.IpUtil;
+import com.graduation.medicaltaskscheduled.utils.JwtUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;

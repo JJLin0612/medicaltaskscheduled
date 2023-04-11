@@ -19,7 +19,7 @@ public interface ResultCode {
      *    c 用户已注册        10004
      *    d 用户被禁用        10005
      *    e token 空或错误   10006
-     *    f token 过有效期       10007
+     *    f token 过有效期    10007
      *    g 此设备被挤下线     10008
      */
     Integer ERROR = 10000;
@@ -49,14 +49,22 @@ public interface ResultCode {
     Integer DELETE_RECORD_FAILED = 11102;
     Integer UPDATE_RECORD_FAILED = 11103;
 
+    /***
+     * 接口请求体null异常 10100
+     *   a 医疗车对象car空     10101
+     */
+    Integer REQUESTBODY_NULL_CAR = 10101;
 
     /**
      * 静态变量
      * 1、 User表
      *     a 用户是否被删除     0：未删除  1：删除状态
+     * 2、 Appointment表
+     *     a 0-未服务    1-已服务
      */
     Integer USER_IS_NOT_DELETED = 0;
     Integer USER_IS_DELETED = 1;
 
-
+    Integer APPOINTMENT_IS_SCHEDULED = 1;
+    Integer APPOINTMENT_IS_NO_SCHEDULED = 0;
 }

@@ -3,6 +3,8 @@ package com.graduation.medicaltaskscheduled.service;
 import com.graduation.medicaltaskscheduled.entity.Doctor;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * <p>
  *  服务类
@@ -13,4 +15,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface DoctorService extends IService<Doctor> {
 
+    String doctorRegister(String workId, String pwd);
+
+    String dcotorLogin(String workId, String pwd, HttpServletRequest request);
 }

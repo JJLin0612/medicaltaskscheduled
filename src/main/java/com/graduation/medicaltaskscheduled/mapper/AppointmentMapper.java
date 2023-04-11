@@ -1,6 +1,6 @@
 package com.graduation.medicaltaskscheduled.mapper;
 
-import com.graduation.medicaltaskscheduled.entity.Admin;
+import com.graduation.medicaltaskscheduled.entity.Appointment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,9 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author RabbitFaFa
- * @since 2023-03-29
+ * @since 2023-04-05
  */
-
-public interface AdminMapper extends BaseMapper<Admin> {
+public interface AppointmentMapper extends BaseMapper<Appointment> {
 
 }

@@ -36,7 +36,7 @@ public class Swagger2Config {
 
     private ApiInfo webApiInfo(){
         return new ApiInfoBuilder()
-                .title("从0到1项目-后端Swagger2接口文档")
+                .title("毕业设计系统-后端Swagger2接口文档")
                 .description("本文档描述项目的后端接口定义")
                 .version("1.0")
                 .contact(new Contact("RabbitFaFa", "", ""))

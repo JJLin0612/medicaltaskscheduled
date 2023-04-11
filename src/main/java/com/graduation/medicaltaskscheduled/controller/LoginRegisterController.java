@@ -1,32 +1,26 @@
 package com.graduation.medicaltaskscheduled.controller;
 
-import com.graduation.medicaltaskscheduled.entity.Admin;
-import com.graduation.medicaltaskscheduled.entity.Doctor;
-import com.graduation.medicaltaskscheduled.entity.Patient;
 import com.graduation.medicaltaskscheduled.entity.dto.Result;
-import com.graduation.medicaltaskscheduled.entity.dto.ResultCode;
-import com.graduation.medicaltaskscheduled.entity.dto.UserLabel;
-import com.graduation.medicaltaskscheduled.exception.CustomException;
 import com.graduation.medicaltaskscheduled.service.LoginRegisterService;
 import com.sun.istack.internal.NotNull;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author RabbitFaFa
  */
+@Slf4j
+@CrossOrigin
 @RestController
 @RequestMapping("/loginRegister")
 public class LoginRegisterController {
 
-    @Resource
+    @Autowired
     private LoginRegisterService loginRegisterService;
 
 
@@ -73,23 +67,34 @@ public class LoginRegisterController {
                     String userLabel,
             HttpServletRequest request
     ) {
-        String token = loginRegisterService.unifyUserLogin(mobile, pwd, userLabel);
+        log.warn("参数为=" + mobile + " " + pwd + " " + userLabel);
+        String token = loginRegisterService.unifyUserLogin(mobile, pwd, userLabel, request);
         return Result.ok().data("token", token);
     }
 
+//    @ApiOperation("统一用户信息获取")
+//    @GetMapping("userInfo")
+//    public Result unifyGetUserInfo(
+//            @RequestParam(value = "token") @ApiParam("用户登录凭证") String token,
+//            @RequestParam(value = "userLabel") @ApiParam("用户标识") String userLabel
+//    ) {
+//         loginRegisterService.unifyGetUserInfo(token, userLabel);
+//
+//    }
+
     /***
      * 用户统一登出API
-     * @param id
+     * @param token
      * @return
      */
     @ApiOperation("用户登出")
     @GetMapping("logout")
     public Result logout(
-            @RequestParam(value = "id", defaultValue = "")
+            @RequestParam(value = "token", defaultValue = "")
             @NotNull
-            @ApiParam("用户id") String id
+            @ApiParam("token") String token
     ) {
-        int res = loginRegisterService.logout(id);
+        int res = loginRegisterService.logout(token);
         return res == 1 ? Result.ok() : Result.error();
     }
 }

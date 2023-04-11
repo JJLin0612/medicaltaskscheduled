@@ -3,6 +3,8 @@ server:
   port: 8888
 # 应用名称
 spring:
+  main:
+    headless: false
   application:
     name: MedicalTaskScheduled
   #返回json的全局时间格式
@@ -12,7 +14,7 @@ spring:
   # 数据库驱动：
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/myproject?serverTimezone=GMT%2B8
+    url: jdbc:mysql://localhost:3306/taskscheduled?serverTimezone=GMT%2B8
     username: "root"
     password: "0612"
   # Redis 连接参数配置

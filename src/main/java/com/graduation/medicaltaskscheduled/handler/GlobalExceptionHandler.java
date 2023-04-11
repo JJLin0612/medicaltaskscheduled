@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
         customException.printStackTrace();
         log.error(customException.getErrorMsg());
         return Result.error()
-                .setMessage(customException.getMessage())
+                .setMessage(customException.getErrorMsg())
                 .setCode(customException.getErrorCode());
     }
 }

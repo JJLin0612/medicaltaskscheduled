@@ -22,17 +22,21 @@ public class PSOUtil {
     private static final double Vmin = -1; // 速度下限
 
     // 问题的参数
-    private static final int carNum = 3; // 医疗车数量
-    private static final int serNum = 11; // 服务点个数
+    private static int carNum = 3; // 医疗车数量
+    private static int serNum = 11; // 服务点个数
     private static final int hosNum = 1; // 医疗中心数量 默认1
 
     // 坐标 默认第一个坐标为医疗中心
-    private static final double[][] a = {{125, 167}, {131, 209}, {159, 199}, {98, 151}, {112, 142},
-            {124, 132}, {161, 114}, {94, 231}, {93, 176}, {77, 166},
-            {130, 76}, {201, 148}};
+    private static double[][] a;
+//    = {{125, 167}, {131, 209}, {159, 199}, {98, 151}, {112, 142},
+//            {124, 132}, {161, 114}, {94, 231}, {93, 176}, {77, 166},
+//            {130, 76}, {201, 148}};
 
 
-    public static int[] getPath() {
+    public static int[] getPath(double[][] location, int carsNum, int sersNum) {
+        a = location;
+        carNum = carsNum;
+        serNum = sersNum;
         // 距离矩阵
         double[][] D = distanceMatrix(a);
 
@@ -41,8 +45,12 @@ public class PSOUtil {
         int[][] pop = new int[sizepop][(serNum + hosNum + 1) * carNum];
         double[][] V = new double[sizepop][(serNum + hosNum + 1) * carNum];
 
+        log.warn(location.length + "");
+        log.warn(carNum + "");
+        log.warn(serNum + "");
         // 初始化种群中粒子的位置与初速度
         for (int i = 0; i < sizepop; i++) {
+            log.warn("初始化种群");
             // 初始化每个粒子的位置
             pop[i] = initPop(hosNum, serNum, carNum);
             // 约束判断
@@ -74,6 +82,7 @@ public class PSOUtil {
         for (int i = 0; i < maxgen; i++) {
             // 更新每一个粒子
             for (int j = 0; j < sizepop; j++) {
+                log.warn("种群迭代");
                 // 计算加速度
                 double[] r1 = new double[carNum * (serNum + hosNum + 1)];
                 double[] r2 = new double[carNum * (serNum + hosNum + 1)];
@@ -278,6 +287,9 @@ public class PSOUtil {
                 }
                 path[m++] = index;
             }
+        }
+        for (int i : path) {
+            System.out.print(i + "-");
         }
         return path;
     }
