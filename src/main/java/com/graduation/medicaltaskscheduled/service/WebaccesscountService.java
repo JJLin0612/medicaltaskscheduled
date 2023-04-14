@@ -2,6 +2,10 @@ package com.graduation.medicaltaskscheduled.service;
 
 import com.graduation.medicaltaskscheduled.entity.Webaccesscount;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.graduation.medicaltaskscheduled.entity.vo.WebAccessCountQuery;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * <p>
@@ -9,8 +13,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author RabbitFaFa
- * @since 2023-03-29
  */
 public interface WebaccesscountService extends IService<Webaccesscount> {
+
+    List<Webaccesscount> getAccessCount(WebAccessCountQuery query);
 
 }

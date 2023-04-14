@@ -1,9 +1,11 @@
 package com.graduation.medicaltaskscheduled.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.graduation.medicaltaskscheduled.entity.Admin;
 import com.graduation.medicaltaskscheduled.entity.Appointment;
 import com.graduation.medicaltaskscheduled.entity.dto.ResultCode;
+import com.graduation.medicaltaskscheduled.entity.vo.AdminQuery;
 import com.graduation.medicaltaskscheduled.exception.CustomException;
 import com.graduation.medicaltaskscheduled.mapper.AdminMapper;
 import com.graduation.medicaltaskscheduled.pso.PSOUtil;
@@ -217,5 +219,38 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 //        new ShowScreen(appointmentList);
 
         //TODO 路径下发至医疗车
+    }
+
+    /***
+     * 条件+分页 组合查询
+     * @param page
+     * @param adminQuery
+     */
+    @Override
+    public void adminListQuery(Page<Admin> page, AdminQuery adminQuery) {
+        if (StringUtils.isEmpty(adminQuery)) {
+            baseMapper.selectPage(page, null);
+            return;
+        }
+        QueryWrapper<Admin> wrapper = new QueryWrapper<>();
+        if (!StringUtils.isEmpty(adminQuery.getName())) {
+            wrapper.like("name", adminQuery.getName());
+        }
+        if (!StringUtils.isEmpty(adminQuery.getIsDisabled())) {
+            wrapper.eq("is_disabled", adminQuery.getIsDisabled());
+        }
+        if (!StringUtils.isEmpty(adminQuery.getBeginTime())) {
+            wrapper.ge("gmt_create", adminQuery.getBeginTime());
+        }
+        if (!StringUtils.isEmpty(adminQuery.getEndTime())) {
+            wrapper.le("gmt_create", adminQuery.getEndTime());
+        }
+        baseMapper.selectPage(page, wrapper);
+    }
+
+    @Override
+    public Admin getAdminByToken(String token) {
+        String id = JwtUtils.getDataIdByTokenStr(token);
+        return baseMapper.selectOne(new QueryWrapper<Admin>().eq("id", id));
     }
 }

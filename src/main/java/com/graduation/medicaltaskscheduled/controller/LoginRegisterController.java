@@ -1,5 +1,7 @@
 package com.graduation.medicaltaskscheduled.controller;
 
+import com.graduation.medicaltaskscheduled.annotation.LogRecord;
+import com.graduation.medicaltaskscheduled.entity.dto.OperateType;
 import com.graduation.medicaltaskscheduled.entity.dto.Result;
 import com.graduation.medicaltaskscheduled.service.LoginRegisterService;
 import com.sun.istack.internal.NotNull;
@@ -34,6 +36,10 @@ public class LoginRegisterController {
      */
     @ApiOperation("统一用户注册")
     @PostMapping("register")
+    @LogRecord(userType = OperateType.OTHER,
+            operateType = OperateType.REGISTER,
+            operateDesc = "用户注册"
+    )
     public Result unifyRegister(
             @RequestParam(value = "mobile", defaultValue = "") @NotNull @ApiParam("手机号码")
                     String mobile,
@@ -58,6 +64,10 @@ public class LoginRegisterController {
      */
     @ApiOperation("统一用户登录")
     @PostMapping("login")
+    @LogRecord(userType = OperateType.OTHER,
+            operateType = OperateType.LOGIN,
+            operateDesc = "用户登录"
+    )
     public Result unifyLogin(
             @RequestParam(value = "mobile", defaultValue = "") @NotNull @ApiParam("手机号码")
                     String mobile,
@@ -89,6 +99,9 @@ public class LoginRegisterController {
      */
     @ApiOperation("用户登出")
     @GetMapping("logout")
+    @LogRecord(userType = OperateType.OTHER,
+            operateType = OperateType.LOGOUT,
+            operateDesc = "用户登出")
     public Result logout(
             @RequestParam(value = "token", defaultValue = "")
             @NotNull

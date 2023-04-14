@@ -26,8 +26,8 @@ public class ExecutorConfig {
     private static final int queueSize = 10;
 
     //获取自定义线程池
-    @Bean("LogThreadPool")
-    public ThreadPoolExecutor buildThreadPoolExcutor() {
+    @Bean("threadPoolExecutor")
+    public ThreadPoolExecutor threadPoolExecutor() {
         return new ThreadPoolExecutor(corePoolSize,
                 maximumPoolSize,
                 keepAliveTime,

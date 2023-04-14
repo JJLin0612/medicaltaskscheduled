@@ -17,4 +17,6 @@ public @interface LogRecord {
     String operateDesc() default "";
     //更新的新内容的表的id(操作类型为MODIFY时记录)
     String contentId() default "";
+    //用户类型(0-管理员 1-医生 2-患者)
+    String userType() default "0";
 }

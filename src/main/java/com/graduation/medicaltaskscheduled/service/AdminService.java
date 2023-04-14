@@ -1,8 +1,10 @@
 package com.graduation.medicaltaskscheduled.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.graduation.medicaltaskscheduled.entity.Admin;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.graduation.medicaltaskscheduled.entity.Appointment;
+import com.graduation.medicaltaskscheduled.entity.vo.AdminQuery;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -29,4 +31,8 @@ public interface AdminService extends IService<Admin> {
     List<Integer> taskScheduled(List<String> carIdList, List<Appointment> appointmentList) throws ExecutionException, InterruptedException;
 
     void ackScheduled(List<String> appointmentIdList);
+
+    void adminListQuery(Page<Admin> page, AdminQuery adminQuery);
+
+    Admin getAdminByToken(String token);
 }

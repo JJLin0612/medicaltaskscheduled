@@ -3,7 +3,9 @@ package com.graduation.medicaltaskscheduled.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.graduation.medicaltaskscheduled.annotation.LogRecord;
 import com.graduation.medicaltaskscheduled.entity.Appointment;
+import com.graduation.medicaltaskscheduled.entity.dto.OperateType;
 import com.graduation.medicaltaskscheduled.entity.dto.Result;
 import com.graduation.medicaltaskscheduled.service.AppointmentService;
 import io.swagger.annotations.ApiOperation;
@@ -34,6 +36,9 @@ public class AppointmentController {
     private AppointmentService appointmentService;
 
     @PostMapping("submitAppointment")
+    @LogRecord(userType = OperateType.USER_TYPE_PATIENT,
+            operateType = OperateType.ADD,
+            operateDesc = "提交预约申请")
     public Result appointment(
             @RequestBody Appointment appointment,
             @RequestParam(value = "token") String token
@@ -44,8 +49,10 @@ public class AppointmentController {
 
     @ApiOperation("分页查询预约记录")
     @GetMapping("appointmentListByPage")
+    @LogRecord(userType = OperateType.USER_TYPE_PATIENT,
+            operateType = OperateType.READ,
+            operateDesc = "分页查询用户自身预约记录")
     public Result appointmentPage(
-
             @ApiParam(value = "pageCurr", name = "pageCurr", defaultValue = "1", required = true)
             @RequestParam(value = "pageCurr") Long pageCurr,
             @ApiParam(value = "pageSize", name = "pageSize", defaultValue = "5", required = true)

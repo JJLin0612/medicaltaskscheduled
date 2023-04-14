@@ -1,5 +1,6 @@
 package com.graduation.medicaltaskscheduled.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.graduation.medicaltaskscheduled.entity.Patient;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.graduation.medicaltaskscheduled.entity.vo.PatientQuery;
@@ -23,5 +24,5 @@ public interface PatientService extends IService<Patient> {
 
     Patient getPatientInfo(String token);
 
-    List<Patient> getPatientListByQuery(PatientQuery patientQuery);
+    void getPatientListByQuery(Page<Patient> page, PatientQuery patientQuery);
 }

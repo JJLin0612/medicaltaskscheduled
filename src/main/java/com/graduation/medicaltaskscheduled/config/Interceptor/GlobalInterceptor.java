@@ -49,7 +49,7 @@ public class GlobalInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //访问量统计
-//        countAccess(request, response);
+        countAccess(request, response);
         //前端的token登录凭证检查
 //        if (loginTokenCheck(request, response)) return false;
         //接口访问限制

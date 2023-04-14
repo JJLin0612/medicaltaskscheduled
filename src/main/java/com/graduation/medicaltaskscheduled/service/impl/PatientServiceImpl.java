@@ -1,6 +1,7 @@
 package com.graduation.medicaltaskscheduled.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.graduation.medicaltaskscheduled.entity.Patient;
 import com.graduation.medicaltaskscheduled.entity.dto.ResultCode;
 import com.graduation.medicaltaskscheduled.entity.vo.PatientQuery;
@@ -10,6 +11,7 @@ import com.graduation.medicaltaskscheduled.service.PatientService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.graduation.medicaltaskscheduled.utils.ClientInfo;
 import com.graduation.medicaltaskscheduled.utils.JwtUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,7 @@ import java.util.concurrent.TimeUnit;
  * @author RabbitFaFa
  * @since 2023-03-29
  */
+@Slf4j
 @Service
 public class PatientServiceImpl extends ServiceImpl<PatientMapper, Patient> implements PatientService {
 
@@ -113,6 +116,7 @@ public class PatientServiceImpl extends ServiceImpl<PatientMapper, Patient> impl
             String deviceInfo = ClientInfo.getDeviceInfo(request);
             //生成token
             token = JwtUtils.getJwtToken(id, deviceInfo);
+            log.error("token" + token);
             //将token缓存
             redisTemplate.opsForValue().set(id, token, 24 * 7, TimeUnit.HOURS);
         }
@@ -137,16 +141,17 @@ public class PatientServiceImpl extends ServiceImpl<PatientMapper, Patient> impl
      * @return 符合条件的 patient 集合
      */
     @Override
-    public List<Patient> getPatientListByQuery(PatientQuery patientQuery) {
+    public void getPatientListByQuery(Page<Patient> page, PatientQuery patientQuery) {
         //无条件查询
         if (StringUtils.isEmpty(patientQuery)) {
-            return baseMapper.selectList(null);
+            baseMapper.selectPage(page, null);
+            return;
         }
         //多条件组合查询
         QueryWrapper<Patient> wrapper = new QueryWrapper<>();
         //昵称 条件限制
         if (!StringUtils.isEmpty(patientQuery.getNickname())) {
-            wrapper.eq("nickname", patientQuery.getNickname());
+            wrapper.like("nickname", patientQuery.getNickname());
         }
         //禁用 条件限制
         if (!StringUtils.isEmpty(patientQuery.getIsDisabled())) {
@@ -160,6 +165,6 @@ public class PatientServiceImpl extends ServiceImpl<PatientMapper, Patient> impl
         if (!StringUtils.isEmpty(patientQuery.getEndTime())) {
             wrapper.le("gmt_create", patientQuery.getEndTime());
         }
-        return baseMapper.selectList(wrapper);
+        baseMapper.selectPage(page, wrapper);
     }
 }
